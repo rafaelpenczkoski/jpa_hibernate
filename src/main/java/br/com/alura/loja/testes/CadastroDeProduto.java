@@ -13,7 +13,7 @@ import java.util.List;
 public class CadastroDeProduto {
 
     public static void main(String[] args) {
-        cadastrarProduto();
+        cadastrarProdutos();
         EntityManager em = JPAUtil.getEntityManager();
         ProdutoDao produtoDao = new ProdutoDao(em);
 
@@ -27,10 +27,14 @@ public class CadastroDeProduto {
         System.out.println("Preço: " + preco);
     }
 
-    private static void cadastrarProduto() {
+    public static void cadastrarProdutos() {
         Categoria celulares = new Categoria("CELULARES");
+        Categoria videogames = new Categoria("VIDEOGAMES");
+        Categoria informatica = new Categoria("INFORMATICA");
 
         Produto celular = new Produto("Xiaomi Redmi", "Muito legal", new BigDecimal("800"), celulares);
+        Produto videogame = new Produto("PS5", "Playstation 5", new BigDecimal("2000"), celulares);
+        Produto macbook = new Produto("Macbook", "Macbook", new BigDecimal("10000"), celulares);
 
         EntityManager em = JPAUtil.getEntityManager();
         ProdutoDao produtoDao = new ProdutoDao(em);
@@ -38,7 +42,11 @@ public class CadastroDeProduto {
 
         em.getTransaction().begin();
         categoriaDao.cadastrar(celulares);
+        categoriaDao.cadastrar(videogames);
+        categoriaDao.cadastrar(informatica);
         produtoDao.cadastrar(celular);
+        produtoDao.cadastrar(videogame);
+        produtoDao.cadastrar(macbook);
         em.getTransaction().commit();
         em.close();
     }

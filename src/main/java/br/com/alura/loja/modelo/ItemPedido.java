@@ -10,13 +10,14 @@ public class ItemPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "preco_unitario")
     private BigDecimal precoUnitario;
     private int quantidade;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Pedido pedido;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Produto produto;
 
     public ItemPedido() {
@@ -67,5 +68,9 @@ public class ItemPedido {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public BigDecimal getValorTotal() {
+        return this.precoUnitario.multiply(new BigDecimal(quantidade));
     }
 }
